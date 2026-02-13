@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-
+import router from "./routes/router.js";
 const app = express();
 
 app.use(cors());
@@ -12,8 +10,6 @@ app.get("/", (req, res) => {
   res.send("Job Tracker API running ✅");
 });
 
-// Rutas
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api", router);
 
 export default app;
