@@ -1,0 +1,32 @@
+{
+  "name": "job-tracker-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Job Tracker App",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "sequelize",
+    "sqlite",
+    "job-tracker"
+  ],
+  "author": "Rodrigo Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
