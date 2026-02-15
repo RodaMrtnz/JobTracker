@@ -8,7 +8,7 @@ const Application = sequelize.define("Application",
         primaryKey: true,
     },
         companyId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: "Company",
@@ -33,13 +33,22 @@ const Application = sequelize.define("Application",
     },
         
     statusName: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("rejected", "accepted", "applied", "interviewing", "offer"),
         allowNull: false,
         references: {
-            model: "Status",
+            model: "Statuses",
             key: "name",
         },
     },
+    userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+        model: "Users",
+        key: "id",
+    },
+    },
+
 });
 
 export default Application;
