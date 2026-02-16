@@ -23,7 +23,7 @@ class UserService {
     }
   }
 
-  async updateUser(userId, { email, name }) {
+  async updateUser(userId, updateData) {
     try {
       const user = await this.User.findByPk(userId);
 
@@ -31,16 +31,12 @@ class UserService {
         throw new Error("Usuario no encontrado");
       }
 
-      if (email && email !== user.email) {
-        const existingUser = await this.User.findOne({ where: { email } });
-        if (existingUser) {
-          throw new Error("El email ya está en uso");
-        }
-        user.email = email;
-      }
+      // No permitir cambiar id ni email (email es la primaryKey)
+      delete updateData.id;
+      delete updateData.email;
 
-      if (name) {
-        user.name = name;
+      if (updateData.name) {
+        user.name = updateData.name;
       }
 
       await user.save();

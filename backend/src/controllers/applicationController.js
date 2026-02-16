@@ -1,35 +1,79 @@
-import Status from "../models/Status.js";
-
-class ApplicationService {
-  constructor(models) {
-    this.Application = models.Application;
-    this.Status = models.Status || Status;
+class ApplicationController {
+  constructor(applicationService) {
+    this.applicationService = applicationService;
   }
 
-  async initializeStatus() {
+  async create(req, res) {
     try {
-      const statuses = [
-        { name: "Applied", color: "blue" },
-        { name: "Interviewing", color: "yellow" },
-        { name: "Offer", color: "white" },
-        { name: "Declined", color: "red" },
-        { name: "Accepted", color: "green" },
-      ];
+      const userId = req.user.id;
+      const { companyId, position, technology, description, jobLink, statusName } = req.body;
 
-      for (const status of statuses) {
-        await this.Status.findOrCreate({
-          where: { name: status.name },
-          defaults: status,
-        });
+      if (!companyId || !position || !technology || !description || !jobLink || !statusName) {
+        return res.status(400).json({ error: "Todos los campos son requeridos" });
       }
 
-      console.log("Status initialized successfully");
+      const result = await this.applicationService.create({
+        companyId,
+        position,
+        technology,
+        description,
+        jobLink,
+        statusName,
+        userId,
+      });
+
+      return res.status(201).json(result);
     } catch (error) {
-      console.error("Error initializing status:", error.message);
+      return res.status(400).json({ error: error.message });
     }
   }
 
-  // Aquí irían otros métodos de Application...
+  async getAll(req, res) {
+    try {
+      const userId = req.user.id;
+      const applications = await this.applicationService.getAll(userId);
+      return res.status(200).json(applications);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+
+  async getById(req, res) {
+    try {
+      const userId = req.user.id;
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({ error: "ID de aplicación requerido" });
+      }
+
+      const application = await this.applicationService.getById(id, userId);
+      return res.status(200).json(application);
+    } catch (error) {
+      return res.status(404).json({ error: error.message });
+    }
+  }
+
+  async updateById(req, res) {
+    try {
+      const userId = req.user.id;
+      const { id } = req.params;
+      const updateData = req.body;
+
+      if (!id) {
+        return res.status(400).json({ error: "ID de aplicación requerido" });
+      }
+
+      if (Object.keys(updateData).length === 0) {
+        return res.status(400).json({ error: "Proporciona al menos un campo para actualizar" });
+      }
+
+      const result = await this.applicationService.updateById(id, userId, updateData);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
 }
 
-export default ApplicationService;
+export default ApplicationController;

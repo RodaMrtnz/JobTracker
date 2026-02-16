@@ -4,7 +4,12 @@ import bcrypt from "bcrypt";
 
 const User = sequelize.define(
   "User",
-  { email : {
+  { id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
@@ -27,13 +32,12 @@ const User = sequelize.define(
       isAlpha: true,
       len: [2, 50],
     },
-  
   },
-  
 });
+
 User.beforeCreate(async (user) => {
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-  });
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+});
 
 export default User;

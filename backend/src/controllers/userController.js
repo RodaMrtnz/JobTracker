@@ -16,13 +16,13 @@ class UserController {
   async updateProfile(req, res) {
     try {
       const userId = req.user.id;
-      const { email, name } = req.body;
+      const updateData = req.body;
 
-      if (!email && !name) {
-        return res.status(400).json({ error: "Proporciona al menos un campo para actualizar" });
+      if (!updateData.name) {
+        return res.status(400).json({ error: "El nombre es requerido para actualizar" });
       }
 
-      const result = await this.userService.updateUser(userId, { email, name });
+      const result = await this.userService.updateUser(userId, updateData);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(400).json({ error: error.message });
