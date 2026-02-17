@@ -752,3 +752,31 @@ textarea.form-control {
   color: #6b7280;
   line-height: 1.6;
 }
+/* Navbar center and right positioning */
+
+.navbar-content {
+  position: relative;
+}
+
+.navbar-links-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-links-right {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.navbar-link-primary {
+  background-color: #3b82f6;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.375rem;
+}
+
+.navbar-link-primary:hover {
+  background-color: #2563eb;
+  opacity: 1;
+}
