@@ -3,11 +3,11 @@
 import { useState } from 'react';
 
 const statusOptions = [
-  { value: 'applied', label: 'Aplicada' },
-  { value: 'interviewing', label: 'Entrevista' },
-  { value: 'offer', label: 'Oferta' },
-  { value: 'accepted', label: 'Aceptada' },
-  { value: 'rejected', label: 'Rechazada' },
+  { value: 'applied', label: 'Applied' },
+  { value: 'interviewing', label: 'Interviewing' },
+  { value: 'offer', label: 'Offer' },
+  { value: 'accepted', label: 'Accepted' },
+  { value: 'rejected', label: 'Rejected' },
 ];
 
 export default function ApplicationForm({ 
@@ -45,7 +45,7 @@ export default function ApplicationForm({
 
       <div className="form-group">
         <label htmlFor="companyId" className="form-label">
-          Empresa
+          Company
         </label>
         <select
           id="companyId"
@@ -56,7 +56,7 @@ export default function ApplicationForm({
           className="form-control"
           disabled={loading}
         >
-          <option value="">Selecciona una empresa</option>
+          <option value="">Select a company</option>
           {companies.map((company) => (
             <option key={company.id} value={company.id}>
               {company.name}
@@ -67,7 +67,7 @@ export default function ApplicationForm({
 
       <div className="form-group">
         <label htmlFor="position" className="form-label">
-          Posición
+          Position
         </label>
         <input
           type="text"
@@ -75,7 +75,7 @@ export default function ApplicationForm({
           name="position"
           value={formData.position}
           onChange={handleChange}
-          placeholder="ej: Senior Developer"
+          placeholder="e.g: Senior Developer"
           required
           className="form-control"
           disabled={loading}
@@ -84,7 +84,7 @@ export default function ApplicationForm({
 
       <div className="form-group">
         <label htmlFor="technology" className="form-label">
-          Tecnología
+          Technology
         </label>
         <input
           type="text"
@@ -92,7 +92,7 @@ export default function ApplicationForm({
           name="technology"
           value={formData.technology}
           onChange={handleChange}
-          placeholder="ej: React, Node.js"
+          placeholder="e.g: React, Node.js"
           required
           className="form-control"
           disabled={loading}
@@ -101,14 +101,14 @@ export default function ApplicationForm({
 
       <div className="form-group">
         <label htmlFor="description" className="form-label">
-          Descripción
+          Description
         </label>
         <textarea
           id="description"
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Describe la oferta, requisitos, etc."
+          placeholder="Describe the offer, requirements, etc."
           required
           className="form-control form-textarea"
           disabled={loading}
@@ -117,7 +117,7 @@ export default function ApplicationForm({
 
       <div className="form-group">
         <label htmlFor="jobLink" className="form-label">
-          Link de la Oferta
+          Job Link
         </label>
         <input
           type="url"
@@ -134,7 +134,7 @@ export default function ApplicationForm({
 
       <div className="form-group">
         <label htmlFor="statusName" className="form-label">
-          Estado
+          Status
         </label>
         <select
           id="statusName"

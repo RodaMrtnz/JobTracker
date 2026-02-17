@@ -6,11 +6,11 @@ import ApplicationForm from '@/components/ApplicationForm';
 import Link from 'next/link';
 
 const statusLabels = {
-  applied: 'Aplicada',
-  interviewing: 'Entrevista',
-  offer: 'Oferta',
-  accepted: 'Aceptada',
-  rejected: 'Rechazada',
+  applied: 'Applied',
+  interviewing: 'Interviewing',
+  offer: 'Offer',
+  accepted: 'Accepted',
+  rejected: 'Rejected',
 };
 
 export default function ApplicationDetailPage() {
@@ -48,7 +48,7 @@ export default function ApplicationDetailPage() {
           });
 
           if (!appRes.ok) {
-            throw new Error('Aplicación no encontrada');
+            throw new Error('Application not found');
           }
 
           const appData = await appRes.json();
@@ -84,7 +84,7 @@ export default function ApplicationDetailPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Error al guardar la aplicación');
+        throw new Error(errorData.error || 'Error saving application');
       }
 
       const data = await response.json();
@@ -103,7 +103,7 @@ export default function ApplicationDetailPage() {
   if (loading) {
     return (
       <div className="app-detail-container">
-        <div className="app-detail-loading">Cargando...</div>
+        <div className="app-detail-loading">Loading...</div>
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function ApplicationDetailPage() {
     return (
       <div className="app-detail-container">
         <Link href="/applications" className="app-detail-back-link">
-          ← Volver
+          ← Back
         </Link>
         <div className="app-detail-error">{error}</div>
       </div>
@@ -123,9 +123,9 @@ export default function ApplicationDetailPage() {
     return (
       <div className="app-detail-container">
         <Link href="/applications" className="app-detail-back-link">
-          ← Volver
+          ← Back
         </Link>
-        <h1 className="app-detail-title">Nueva Aplicación</h1>
+        <h1 className="app-detail-title">New Application</h1>
         <div className="app-detail-form-wrapper">
           <ApplicationForm
             onSubmit={handleSubmit}
@@ -140,12 +140,12 @@ export default function ApplicationDetailPage() {
   return (
     <div className="app-detail-container">
       <Link href="/applications" className="app-detail-back-link">
-        ← Volver
+        ← Back
       </Link>
 
       {isEditing ? (
         <div>
-          <h1 className="app-detail-title">Editar Aplicación</h1>
+          <h1 className="app-detail-title">Edit Application</h1>
           <div className="app-detail-form-wrapper">
             <ApplicationForm
               onSubmit={handleSubmit}
@@ -157,7 +157,7 @@ export default function ApplicationDetailPage() {
               onClick={() => setIsEditing(false)}
               className="app-detail-cancel-button"
             >
-              Cancelar
+              Cancel
             </button>
           </div>
         </div>
@@ -175,14 +175,14 @@ export default function ApplicationDetailPage() {
 
           <div className="app-detail-content">
             <div className="app-detail-section">
-              <h2 className="app-detail-section-title">Detalles</h2>
+              <h2 className="app-detail-section-title">Details</h2>
               <div className="app-detail-grid">
                 <div className="app-detail-item">
-                  <span className="app-detail-label">Tecnología:</span>
+                  <span className="app-detail-label">Technology:</span>
                   <span>{application?.technology}</span>
                 </div>
                 <div className="app-detail-item">
-                  <span className="app-detail-label">Descripción:</span>
+                  <span className="app-detail-label">Description:</span>
                   <p className="app-detail-description">{application?.description}</p>
                 </div>
                 <div className="app-detail-item">
@@ -193,7 +193,7 @@ export default function ApplicationDetailPage() {
                     rel="noopener noreferrer"
                     className="app-detail-link"
                   >
-                    Ver oferta completa
+                    View complete offer
                   </a>
                 </div>
               </div>
@@ -204,7 +204,7 @@ export default function ApplicationDetailPage() {
                 onClick={() => setIsEditing(true)}
                 className="app-detail-edit-button"
               >
-                Editar
+                Edit
               </button>
             </div>
           </div>

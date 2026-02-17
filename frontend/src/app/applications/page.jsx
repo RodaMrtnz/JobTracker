@@ -22,7 +22,7 @@ export default function ApplicationsPage() {
         });
 
         if (!response.ok) {
-          throw new Error('Error al obtener aplicaciones');
+          throw new Error('Error fetching applications');
         }
 
         const data = await response.json();
@@ -42,8 +42,8 @@ export default function ApplicationsPage() {
   if (loading) {
     return (
       <div className="applications-container">
-        <h1 className="applications-title">Mis Aplicaciones</h1>
-        <div className="applications-loading">Cargando...</div>
+        <h1 className="applications-title">My Applications</h1>
+        <div className="applications-loading">Loading...</div>
       </div>
     );
   }
@@ -51,9 +51,9 @@ export default function ApplicationsPage() {
   return (
     <div className="applications-container">
       <div className="applications-header">
-        <h1 className="applications-title">Mis Aplicaciones</h1>
+        <h1 className="applications-title">My Applications</h1>
         <Link href="/applications/new" className="applications-button">
-          + Nueva Aplicación
+          + New Application
         </Link>
       </div>
 
@@ -65,9 +65,9 @@ export default function ApplicationsPage() {
 
       {applications.length === 0 ? (
         <div className="applications-empty">
-          <p className="applications-empty-text">No tienes aplicaciones registradas</p>
+          <p className="applications-empty-text">No applications registered</p>
           <Link href="/applications/new" className="applications-empty-button">
-            Crear tu primera aplicación
+            Create your first application
           </Link>
         </div>
       ) : (

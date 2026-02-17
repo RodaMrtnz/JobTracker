@@ -6,34 +6,34 @@ export default function Home() {
   return (
     <div className="home-container">
       <div className="home-hero">
-        <h1 className="home-title">Bienvenido a JobTracker</h1>
+        <h1 className="home-title">Welcome to JobTracker</h1>
         <p className="home-subtitle">
-          Gestiona tus aplicaciones de trabajo de manera eficiente
+          Manage your job applications efficiently
         </p>
         <Link href="/applications" className="home-button">
-          Ver mis Aplicaciones
+          View My Applications
         </Link>
       </div>
 
       <div className="home-features">
         <div className="home-feature-card">
-          <h3 className="home-feature-title">📋 Organiza</h3>
+          <h3 className="home-feature-title">📋 Organize</h3>
           <p className="home-feature-text">
-            Mantén un registro completo de todas tus aplicaciones
+            Keep a complete record of all your applications
           </p>
         </div>
 
         <div className="home-feature-card">
-          <h3 className="home-feature-title">📊 Monitorea</h3>
+          <h3 className="home-feature-title">📊 Monitor</h3>
           <p className="home-feature-text">
-            Sigue el estado de cada aplicación en tiempo real
+            Track the status of each application in real-time
           </p>
         </div>
 
         <div className="home-feature-card">
-          <h3 className="home-feature-title">🎯 Destaca</h3>
+          <h3 className="home-feature-title">🎯 Stand Out</h3>
           <p className="home-feature-text">
-            Mejora tu proceso de búsqueda de empleo
+            Improve your job search process
           </p>
         </div>
       </div>

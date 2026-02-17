@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body>
         <nav className="navbar">
           <div className="navbar-content">
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
             </Link>
             <div className="navbar-links">
               <Link href="/applications" className="navbar-link">
-                Mis Aplicaciones
+                My Applications
               </Link>
             </div>
           </div>
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
 
         <footer className="footer">
           <div className="container">
-            <p>&copy; 2026 JobTracker. Todos los derechos reservados.</p>
+            <p>&copy; 2026 JobTracker. All rights reserved.</p>
           </div>
         </footer>
       </body>
