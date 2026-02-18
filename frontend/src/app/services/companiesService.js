@@ -21,7 +21,7 @@ const parseJsonSafe = async (res) => {
 const companiesService = {
   async create(companyData) {
     if (!getAuthToken()) {
-      throw new Error('Debes iniciar sesión para crear una empresa');
+      throw new Error('You must be logged in to create a company');
     }
 
     const res = await fetch(`${API_BASE_URL}/api/companies`, {
@@ -51,7 +51,7 @@ const companiesService = {
 
   async updateById(id, updateData) {
     if (!getAuthToken()) {
-      throw new Error('Debes iniciar sesión para editar una empresa');
+      throw new Error('You must be logged in to edit a company');
     }
 
     const res = await fetch(`${API_BASE_URL}/api/companies/${id}`, {
