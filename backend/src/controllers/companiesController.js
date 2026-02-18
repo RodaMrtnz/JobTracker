@@ -5,16 +5,15 @@ class CompaniesController {
 
   async create(req, res) {
     try {
-      const { name, industry, website } = req.body;
+      const { name, industry } = req.body;
 
-      if (!name || !industry || !website) {
-        return res.status(400).json({ error: "Nombre, industria y sitio web son requeridos" });
+      if (!name || !industry) {
+        return res.status(400).json({ error: "Nombre e industria son requeridos" });
       }
 
       const result = await this.companiesService.create({
         name,
         industry,
-        website,
       });
 
       return res.status(201).json(result);

@@ -5,7 +5,7 @@ class CompaniesService {
 
   async create(companyData) {
     try {
-      const { name, industry, website } = companyData;
+      const { name, industry } = companyData;
 
       // Verificar que no exista una empresa con el mismo nombre
       const existingCompany = await this.Company.findOne({ where: { name } });
@@ -16,14 +16,12 @@ class CompaniesService {
       const newCompany = await this.Company.create({
         name,
         industry,
-        website,
       });
 
       return {
         id: newCompany.id,
         name: newCompany.name,
         industry: newCompany.industry,
-        website: newCompany.website,
         message: "Empresa creada exitosamente",
       };
     } catch (error) {
@@ -84,7 +82,6 @@ class CompaniesService {
         id: company.id,
         name: company.name,
         industry: company.industry,
-        website: company.website,
         message: "Empresa actualizada exitosamente",
       };
     } catch (error) {

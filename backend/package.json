@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "db:reset": "node scripts/resetDb.mjs",
+    "db:path": "node --input-type=module -e \"import { DB_STORAGE_PATH } from './src/config/db.js'; console.log(DB_STORAGE_PATH);\""
   },
   "keywords": [
     "node",

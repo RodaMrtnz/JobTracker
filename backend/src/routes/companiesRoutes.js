@@ -12,7 +12,6 @@ router.post(
   validate([
     { field: "name", required: true, type: "string" },
     { field: "industry", required: true, type: "string" },
-    { field: "website", required: true, type: "string" },
   ]),
   (req, res) => companiesController.create(req, res)
 );
@@ -30,7 +29,6 @@ router.put(
   validate([
     { field: "name", required: false, type: "string" },
     { field: "industry", required: false, type: "string" },
-    { field: "website", required: false, type: "string" },
   ]),
   (req, res) => companiesController.updateById(req, res)
 );

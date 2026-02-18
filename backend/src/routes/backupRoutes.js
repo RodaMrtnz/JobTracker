@@ -1,6 +1,6 @@
 import { Router } from "express";
-import BackupService from "../services/BackupService.js";
-import authMiddleware from "../middlewares/authMiddleware.js";
+import BackupService from "../services/backupServices.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 

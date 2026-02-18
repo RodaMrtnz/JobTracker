@@ -20,12 +20,17 @@ export default function AuthProvider({children}) {
     try {
       const userStorage = localStorage.getItem("user");
       const isAuthStorage = localStorage.getItem("isAuthenticated");
+      const tokenStorage = localStorage.getItem("token");
 
-      if (userStorage) {
+      if (userStorage && tokenStorage) {
         setUser(JSON.parse(userStorage));
       }
-      if (isAuthStorage === 'true') {
+      if (isAuthStorage === 'true' && tokenStorage) {
         setIsAuthenticated(true);
+      } else {
+        localStorage.removeItem("user");
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("token");
       }
     } catch (error) {
       console.log("Error loading auth from localStorage:", error);
@@ -51,7 +56,7 @@ export default function AuthProvider({children}) {
       return result;
 
     } catch (error) {
-      return { success: false, error: "Error de conexión" }
+      return { success: false, error: "Connection error" }
     } finally {
       setLoading(false);
     }
@@ -64,17 +69,12 @@ export default function AuthProvider({children}) {
       const result = await authService.register(userData);
       
       if (result.success) {
-        setUser(result.user)
-        setIsAuthenticated(true)
-        localStorage.setItem("user", JSON.stringify(result.user))
-        localStorage.setItem("isAuthenticated", "true")
-        localStorage.setItem("token", result.user.token)
-        router.push("/")
+        router.push("/login")
       }
       
       return result;
     } catch (error) {
-      return { success: false, error: "Error al crear la cuenta" }
+      return { success: false, error: "Could not create account" }
     } finally {
       setLoading(false);
     }
@@ -89,8 +89,33 @@ export default function AuthProvider({children}) {
     router.push("/login")
   }
 
+  const updateProfile = async (updateData) => {
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        return { success: false, error: "Invalid session" };
+      }
+
+      const result = await authService.updateProfile(updateData, token);
+
+      if (result.success) {
+        setUser(result.user);
+        localStorage.setItem("user", JSON.stringify(result.user));
+      }
+
+      return result;
+    } catch (error) {
+      return { success: false, error: "Could not update profile" };
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{user, loading, login, register, logout, isAuthenticated}}>
+    <AuthContext.Provider value={{user, loading, login, register, logout, updateProfile, isAuthenticated}}>
         {children}
     </AuthContext.Provider>
   )

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import ApplicationForm from '@/components/ApplicationForm';
 import Link from 'next/link';
+import applicationsService from '@/app/services/applicationsService';
 
 const statusLabels = {
   applied: 'Applied',
@@ -33,7 +34,8 @@ export default function ApplicationDetailPage() {
         setLoading(true);
 
         // Fetch companies siempre
-        const companiesRes = await fetch('/api/companies', {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+        const companiesRes = await fetch(`${API_BASE_URL}/api/companies`, {
           credentials: 'include',
         });
         if (companiesRes.ok) {
@@ -43,15 +45,7 @@ export default function ApplicationDetailPage() {
 
         // Fetch application si no es nueva
         if (!isNewApplication && id) {
-          const appRes = await fetch(`/api/applications/${id}`, {
-            credentials: 'include',
-          });
-
-          if (!appRes.ok) {
-            throw new Error('Application not found');
-          }
-
-          const appData = await appRes.json();
+          const appData = await applicationsService.getById(id);
           setApplication(appData);
         }
 
@@ -69,25 +63,9 @@ export default function ApplicationDetailPage() {
   const handleSubmit = async (formData) => {
     try {
       setSubmitError(null);
-
-      const method = isNewApplication ? 'POST' : 'PUT';
-      const url = isNewApplication ? '/api/applications' : `/api/applications/${id}`;
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Error saving application');
-      }
-
-      const data = await response.json();
+      const data = isNewApplication
+        ? await applicationsService.create(formData)
+        : await applicationsService.updateById(id, formData);
 
       if (isNewApplication) {
         router.push(`/applications/${data.id}`);

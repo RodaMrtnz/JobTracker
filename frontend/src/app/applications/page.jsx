@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import ApplicationCard from '@/components/ApplicationCard';
 import Link from 'next/link';
+import applicationsService from '@/app/services/applicationsService';
 
 export default function ApplicationsPage() {
   const [applications, setApplications] = useState([]);
@@ -13,20 +14,8 @@ export default function ApplicationsPage() {
     const fetchApplications = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/applications', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          throw new Error('Error fetching applications');
-        }
-
-        const data = await response.json();
-        setApplications(Array.isArray(data) ? data : data.applications || []);
+        const data = await applicationsService.getAll();
+        setApplications(data);
         setError(null);
       } catch (err) {
         setError(err.message);

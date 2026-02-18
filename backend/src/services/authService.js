@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.JWT_SECRET || "tu_clave_secreta_aqui";
 
 class AuthService {
-  constructor(models) {
-    this.User = models.User;
+  constructor(modelOrModels) {
+    this.User = modelOrModels?.User || modelOrModels;
   }
 
   async register(email, password, name) {

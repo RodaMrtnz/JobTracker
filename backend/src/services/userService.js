@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
 class UserService {
-  constructor(models) {
-    this.User = models.User;
+  constructor(modelOrModels) {
+    this.User = modelOrModels?.User || modelOrModels;
   }
 
   async getUserById(userId) {

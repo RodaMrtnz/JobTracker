@@ -19,6 +19,18 @@ const parseJsonSafe = async (res) => {
 };
 
 const companiesService = {
+  async getAll() {
+    const res = await fetch(`${API_BASE_URL}/api/companies`, {
+      credentials: 'include',
+    });
+
+    const data = await parseJsonSafe(res);
+    if (!res.ok) throw new Error(data?.error || 'Error fetching companies');
+
+    if (Array.isArray(data)) return data;
+    return data?.companies || [];
+  },
+
   async create(companyData) {
     if (!getAuthToken()) {
       throw new Error('You must be logged in to create a company');
