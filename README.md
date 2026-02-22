@@ -33,7 +33,7 @@ This project was built to apply real-world backend architecture concepts beyond 
 - Status tracking (Pending, Interview, Rejected, Accepted)
 - Input validation middleware
 - Centralized error handling
-- Backup route for data export
+- Protected backup route for database export
 
 ## Project Structure
 
@@ -127,7 +127,7 @@ Frontend runs on:
 - `DELETE /applications/:id`
 
 ### Backup
-- `GET /backup`
+- `GET /backup` (protected with JWT, downloads the SQLite database file)
 
 ## Architectural Decisions
 
@@ -136,6 +136,7 @@ Frontend runs on:
 - Centralized error middleware
 - Validation middleware before controller logic
 - Services contain business logic (not controllers)
+- Backup endpoint also follows `Route → Controller → Service`
 - SQLite for simplicity and portability
 
 ## What I Learned

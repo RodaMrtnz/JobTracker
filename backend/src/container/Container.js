@@ -10,6 +10,8 @@ import ApplicationService from "../services/applicationServices.js";
 import ApplicationController from "../controllers/applicationController.js";
 import CompaniesService from "../services/companiesServices.js";
 import CompaniesController from "../controllers/companiesController.js";
+import BackupService from "../services/backupServices.js";
+import BackupController from "../controllers/backupController.js";
 
 
 const userService = new UserService(User);
@@ -24,10 +26,13 @@ const applicationController = new ApplicationController(applicationService);
 const companiesService = new CompaniesService({ Company });
 const companiesController = new CompaniesController(companiesService);
 
+const backupController = new BackupController(BackupService);
+
 
 export {
     userController,
     authController,
     applicationController,
     companiesController,
+    backupController,
 };
