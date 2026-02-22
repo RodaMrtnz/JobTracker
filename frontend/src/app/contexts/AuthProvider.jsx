@@ -16,27 +16,52 @@ export default function AuthProvider({children}) {
 
   const router = useRouter()
 
-  useEffect(() => {
+  const syncAuthFromStorage = () => {
     try {
       const userStorage = localStorage.getItem("user");
       const isAuthStorage = localStorage.getItem("isAuthenticated");
       const tokenStorage = localStorage.getItem("token");
 
-      if (userStorage && tokenStorage) {
-        setUser(JSON.parse(userStorage));
-      }
-      if (isAuthStorage === 'true' && tokenStorage) {
-        setIsAuthenticated(true);
-      } else {
+      if (!tokenStorage || isAuthStorage !== 'true' || !userStorage) {
+        setUser(null);
+        setIsAuthenticated(false);
         localStorage.removeItem("user");
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("token");
+        return;
       }
+
+      const parsedUser = JSON.parse(userStorage);
+      setUser(parsedUser);
+      setIsAuthenticated(true);
     } catch (error) {
-      console.log("Error loading auth from localStorage:", error);
-    } finally {
-      setLoading(false);
+      setUser(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem("user");
+      localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("token");
     }
+  }
+
+  useEffect(() => {
+    syncAuthFromStorage();
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const handleStorageSync = () => {
+      syncAuthFromStorage();
+    };
+
+    window.addEventListener("storage", handleStorageSync);
+    window.addEventListener("focus", handleStorageSync);
+    document.addEventListener("visibilitychange", handleStorageSync);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageSync);
+      window.removeEventListener("focus", handleStorageSync);
+      document.removeEventListener("visibilitychange", handleStorageSync);
+    };
   }, []);
 
   const login = async(userData) => {
