@@ -1,3 +1,4 @@
+import "dotenv/config";
 import app from "./app.js";
 import { sequelize } from "./config/db.js";
 import Status from "./models/Status.js";

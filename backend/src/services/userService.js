@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 class UserService {
   constructor(modelOrModels) {
     this.User = modelOrModels?.User || modelOrModels;
+    this.Application = modelOrModels?.Application;
   }
 
   async getUserById(userId) {
@@ -75,7 +76,7 @@ class UserService {
     }
   }
 
-  async deleteUser(userId) {
+  async deleteUser(userId, password) {
     try {
       const user = await this.User.findByPk(userId);
 
@@ -83,7 +84,25 @@ class UserService {
         throw new Error("Usuario no encontrado");
       }
 
-      await user.destroy();
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new Error("Contraseña incorrecta");
+      }
+
+      const transaction = await this.User.sequelize.transaction();
+
+      try {
+        if (this.Application) {
+          await this.Application.destroy({ where: { userId }, transaction });
+        }
+
+        await user.destroy({ transaction });
+
+        await transaction.commit();
+      } catch (innerError) {
+        await transaction.rollback();
+        throw innerError;
+      }
 
       return { message: "Usuario eliminado exitosamente" };
     } catch (error) {

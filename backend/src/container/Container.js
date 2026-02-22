@@ -14,7 +14,7 @@ import BackupService from "../services/backupServices.js";
 import BackupController from "../controllers/backupController.js";
 
 
-const userService = new UserService(User);
+const userService = new UserService({ User, Application });
 const userController = new UserController(userService);
 
 const authService = new AuthService(User);

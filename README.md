@@ -83,8 +83,15 @@ Authorization: Bearer <token>
 Create a `.env` file inside the `backend` folder:
 
 ```env
-PORT=3000
+PORT=4000
 JWT_SECRET=your_secret_key
+DB_ALTER=false
+```
+
+Create a `.env.local` file inside the `frontend` folder:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:4000
 ```
 
 ## Installation
@@ -99,7 +106,7 @@ npm run dev
 
 Server runs on:
 
-`http://localhost:3000`
+`http://localhost:4000`
 
 ### Frontend
 

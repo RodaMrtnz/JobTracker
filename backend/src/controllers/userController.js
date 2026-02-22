@@ -52,7 +52,13 @@ class UserController {
   async deleteProfile(req, res) {
     try {
       const userId = req.user.id;
-      const result = await this.userService.deleteUser(userId);
+      const { password } = req.body;
+
+      if (!password) {
+        return res.status(400).json({ error: "La contraseña es requerida para eliminar la cuenta" });
+      }
+
+      const result = await this.userService.deleteUser(userId, password);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(400).json({ error: error.message });

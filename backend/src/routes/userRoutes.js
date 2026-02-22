@@ -28,6 +28,13 @@ router.put(
   (req, res) => userController.changePassword(req, res)
 );
 
-router.delete("/profile", authMiddleware, (req, res) => userController.deleteProfile(req, res));
+router.delete(
+  "/profile",
+  authMiddleware,
+  validate([
+    { field: "password", required: true, type: "string" },
+  ]),
+  (req, res) => userController.deleteProfile(req, res)
+);
 
 export default router;
