@@ -5,7 +5,7 @@ import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-// POST - Crear una nueva empresa
+// POST - Create a new company
 router.post(
   "/",
   authMiddleware,
@@ -16,13 +16,13 @@ router.post(
   (req, res) => companiesController.create(req, res)
 );
 
-// GET - Obtener todas las empresas
+// GET - Get all companies
 router.get("/", (req, res) => companiesController.getAll(req, res));
 
-// GET - Obtener una empresa por ID
+// GET - Get a company by ID
 router.get("/:id", (req, res) => companiesController.getById(req, res));
 
-// PUT - Actualizar una empresa por ID
+// PUT - Update a company by ID
 router.put(
   "/:id",
   authMiddleware,

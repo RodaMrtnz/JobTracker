@@ -6,7 +6,7 @@ import { authMiddleware } from "../middlewares/authMiddleware.js";
 const statusEnum = ["rejected", "accepted", "applied", "interviewing", "offer"];
 const router = Router();
 
-// POST - Crear una nueva aplicación
+// POST - Create a new application
 router.post(
   "/",
   authMiddleware,
@@ -21,13 +21,13 @@ router.post(
   (req, res) => applicationController.create(req, res)
 );
 
-// GET - Obtener todas las aplicaciones del usuario
+// GET - Get all applications for the user
 router.get("/", authMiddleware, (req, res) => applicationController.getAll(req, res));
 
-// GET - Obtener una aplicación por ID
+// GET - Get an application by ID
 router.get("/:id", authMiddleware, (req, res) => applicationController.getById(req, res));
 
-// PUT - Actualizar una aplicación por ID
+// PUT - Update an application by ID
 router.put(
   "/:id",
   authMiddleware,

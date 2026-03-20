@@ -7,9 +7,9 @@ class AuthController {
     try {
       const { email, password, name } = req.body;
 
-      // Validar campos requeridos
+      // Validate required fields
       if (!email || !password || !name) {
-        return res.status(400).json({ error: "Email, contraseña y nombre son requeridos" });
+        return res.status(400).json({ error: "Email, password and name are required" });
       }
 
       const result = await this.authService.register(email, password, name);
@@ -24,7 +24,7 @@ class AuthController {
       const { email, password } = req.body;
 
       if (!email || !password) {
-        return res.status(400).json({ error: "Email y contraseña son requeridos" });
+        return res.status(400).json({ error: "Email and password are required" });
       }
 
       const result = await this.authService.login(email, password);
@@ -48,7 +48,7 @@ class AuthController {
       const token = req.headers.authorization?.split(" ")[1];
       
       if (!token) {
-        return res.status(401).json({ error: "Token no provisto" });
+        return res.status(401).json({ error: "Token not provided" });
       }
 
       const decoded = this.authService.verifyToken(token);

@@ -8,7 +8,7 @@ class CompaniesController {
       const { name, industry } = req.body;
 
       if (!name || !industry) {
-        return res.status(400).json({ error: "Nombre e industria son requeridos" });
+        return res.status(400).json({ error: "Name and industry are required" });
       }
 
       const result = await this.companiesService.create({
@@ -36,7 +36,7 @@ class CompaniesController {
       const { id } = req.params;
 
       if (!id) {
-        return res.status(400).json({ error: "ID de empresa requerido" });
+        return res.status(400).json({ error: "Company ID is required" });
       }
 
       const company = await this.companiesService.getById(id);
@@ -52,11 +52,11 @@ class CompaniesController {
       const updateData = req.body;
 
       if (!id) {
-        return res.status(400).json({ error: "ID de empresa requerido" });
+        return res.status(400).json({ error: "Company ID is required" });
       }
 
       if (Object.keys(updateData).length === 0) {
-        return res.status(400).json({ error: "Proporciona al menos un campo para actualizar" });
+        return res.status(400).json({ error: "Provide at least one field to update" });
       }
 
       const result = await this.companiesService.updateById(id, updateData);

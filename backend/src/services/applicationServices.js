@@ -9,16 +9,16 @@ class ApplicationService {
     try {
       const { companyId, position, technology, description, jobLink, statusName, userId } = applicationData;
 
-      // Verificar que la empresa existe
+      // Verify that the company exists
       const company = await this.Company.findByPk(companyId);
       if (!company) {
-        throw new Error("Empresa no encontrada");
+        throw new Error("Company not found");
       }
 
-      // Verificar que el estado existe
+      // Verify that the status exists
       const status = await this.Status.findOne({ where: { name: statusName } });
       if (!status) {
-        throw new Error("Estado no válido");
+        throw new Error("Invalid status");
       }
 
       const newApplication = await this.Application.create({
@@ -40,10 +40,10 @@ class ApplicationService {
         jobLink: newApplication.jobLink,
         statusName: newApplication.statusName,
         userId: newApplication.userId,
-        message: "Aplicación creada exitosamente",
+        message: "Application created successfully",
       };
     } catch (error) {
-      throw new Error(`Error al crear aplicación: ${error.message}`);
+      throw new Error(`Error creating application: ${error.message}`);
     }
   }
 
@@ -58,12 +58,12 @@ class ApplicationService {
       });
 
       if (applications.length === 0) {
-        return { message: "No hay aplicaciones registradas", applications: [] };
+        return { message: "No applications registered", applications: [] };
       }
 
       return applications;
     } catch (error) {
-      throw new Error(`Error al obtener aplicaciones: ${error.message}`);
+      throw new Error(`Error fetching applications: ${error.message}`);
     }
   }
 
@@ -78,12 +78,12 @@ class ApplicationService {
       });
 
       if (!application) {
-        throw new Error("Aplicación no encontrada");
+        throw new Error("Application not found");
       }
 
       return application;
     } catch (error) {
-      throw new Error(`Error al obtener aplicación: ${error.message}`);
+      throw new Error(`Error fetching application: ${error.message}`);
     }
   }
 
@@ -94,26 +94,26 @@ class ApplicationService {
       });
 
       if (!application) {
-        throw new Error("Aplicación no encontrada");
+        throw new Error("Application not found");
       }
 
-      // No permitir cambiar id ni userId
+      // Do not allow changing id or userId
       delete updateData.id;
       delete updateData.userId;
 
-      // Si se actualiza el estado, verificar que sea válido
+      // If status is updated, verify it is valid
       if (updateData.statusName) {
         const status = await this.Status.findOne({ where: { name: updateData.statusName } });
         if (!status) {
-          throw new Error("Estado no válido");
+          throw new Error("Invalid status");
         }
       }
 
-      // Si se actualiza la compañía, verificar que exista
+      // If company is updated, verify it exists
       if (updateData.companyId) {
         const company = await this.Company.findByPk(updateData.companyId);
         if (!company) {
-          throw new Error("Empresa no encontrada");
+          throw new Error("Company not found");
         }
       }
 
@@ -128,10 +128,10 @@ class ApplicationService {
         jobLink: application.jobLink,
         statusName: application.statusName,
         userId: application.userId,
-        message: "Aplicación actualizada exitosamente",
+        message: "Application updated successfully",
       };
     } catch (error) {
-      throw new Error(`Error al actualizar aplicación: ${error.message}`);
+      throw new Error(`Error updating application: ${error.message}`);
     }
   }
 }

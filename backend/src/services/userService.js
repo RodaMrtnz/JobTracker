@@ -11,7 +11,7 @@ class UserService {
       const user = await this.User.findByPk(userId);
       
       if (!user) {
-        throw new Error("Usuario no encontrado");
+        throw new Error("User not found");
       }
 
       return {
@@ -20,7 +20,7 @@ class UserService {
         name: user.name,
       };
     } catch (error) {
-      throw new Error(`Error al obtener usuario: ${error.message}`);
+      throw new Error(`Error fetching user: ${error.message}`);
     }
   }
 
@@ -29,10 +29,10 @@ class UserService {
       const user = await this.User.findByPk(userId);
 
       if (!user) {
-        throw new Error("Usuario no encontrado");
+        throw new Error("User not found");
       }
 
-      // No permitir cambiar id ni email (email es la primaryKey)
+      // Do not allow changing id or email (email is the primaryKey)
       delete updateData.id;
       delete updateData.email;
 
@@ -46,10 +46,10 @@ class UserService {
         id: user.id,
         email: user.email,
         name: user.name,
-        message: "Usuario actualizado exitosamente",
+        message: "User updated successfully",
       };
     } catch (error) {
-      throw new Error(`Error al actualizar usuario: ${error.message}`);
+      throw new Error(`Error updating user: ${error.message}`);
     }
   }
 
@@ -58,21 +58,21 @@ class UserService {
       const user = await this.User.findByPk(userId);
 
       if (!user) {
-        throw new Error("Usuario no encontrado");
+        throw new Error("User not found");
       }
 
       const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
       if (!isPasswordValid) {
-        throw new Error("Contraseña actual incorrecta");
+        throw new Error("Current password is incorrect");
       }
 
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(newPassword, salt);
       await user.save();
 
-      return { message: "Contraseña actualizada exitosamente" };
+      return { message: "Password updated successfully" };
     } catch (error) {
-      throw new Error(`Error al cambiar contraseña: ${error.message}`);
+      throw new Error(`Error changing password: ${error.message}`);
     }
   }
 
@@ -81,12 +81,12 @@ class UserService {
       const user = await this.User.findByPk(userId);
 
       if (!user) {
-        throw new Error("Usuario no encontrado");
+        throw new Error("User not found");
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        throw new Error("Contraseña incorrecta");
+        throw new Error("Incorrect password");
       }
 
       const transaction = await this.User.sequelize.transaction();
@@ -104,9 +104,9 @@ class UserService {
         throw innerError;
       }
 
-      return { message: "Usuario eliminado exitosamente" };
+      return { message: "User deleted successfully" };
     } catch (error) {
-      throw new Error(`Error al eliminar usuario: ${error.message}`);
+      throw new Error(`Error deleting user: ${error.message}`);
     }
   }
 }

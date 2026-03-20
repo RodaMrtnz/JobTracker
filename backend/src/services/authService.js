@@ -2,7 +2,7 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = process.env.JWT_SECRET || "tu_clave_secreta_aqui";
+const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key_here";
 
 class AuthService {
   constructor(modelOrModels) {
@@ -11,23 +11,23 @@ class AuthService {
 
   async register(email, password, name) {
     try {
-      // Validar que no exista el usuario
+      // Validate that the user does not exist
       const existingUser = await this.User.findOne({ where: { email } });
       if (existingUser) {
-        throw new Error("El email ya está registrado");
+        throw new Error("Email is already registered");
       }
 
-      // Crear usuario (el hash se hace en el hook beforeCreate del modelo)
+      // Create user (hash is done in the beforeCreate model hook)
       const user = await this.User.create({ email, password, name });
       
       return {
         id: user.id,
         email: user.email,
         name: user.name,
-        message: "Registro exitoso",
+        message: "Registration successful",
       };
     } catch (error) {
-      throw new Error(`Error en registro: ${error.message}`);
+      throw new Error(`Registration error: ${error.message}`);
     }
   }
 
@@ -35,16 +35,16 @@ class AuthService {
     try {
       const user = await this.User.findOne({ where: { email } });
       if (!user) {
-        throw new Error("Email o contraseña incorrectos");
+        throw new Error("Incorrect email or password");
       }
 
-      // Comparar contraseña
+      // Compare password
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        throw new Error("Email o contraseña incorrectos");
+        throw new Error("Incorrect email or password");
       }
 
-      // Generar JWT
+      // Generate JWT
       const token = jwt.sign(
         { id: user.id, email: user.email },
         SECRET_KEY,
@@ -56,10 +56,10 @@ class AuthService {
         email: user.email,
         name: user.name,
         token,
-        message: "Login exitoso",
+        message: "Login successful",
       };
     } catch (error) {
-      throw new Error(`Error en login: ${error.message}`);
+      throw new Error(`Login error: ${error.message}`);
     }
   }
 
@@ -68,13 +68,13 @@ class AuthService {
       const decoded = jwt.verify(token, SECRET_KEY);
       return decoded;
     } catch (error) {
-      throw new Error("Token inválido o expirado");
+      throw new Error("Invalid or expired token");
     }
   }
 
   async logout() {
-    // Si usas refresh tokens en BD, puedes invalidarlos aquí
-    return { message: "Logout exitoso" };
+    // If you use refresh tokens in DB, you can invalidate them here
+    return { message: "Logout successful" };
   }
 }
 

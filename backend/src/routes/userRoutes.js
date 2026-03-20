@@ -5,7 +5,7 @@ import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-// Rutas protegidas
+// Protected routes
 router.get("/profile", authMiddleware, (req, res) => userController.getProfile(req, res));
 
 router.put(

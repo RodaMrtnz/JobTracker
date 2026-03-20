@@ -20,7 +20,7 @@ export default function NewCompanyPage() {
 
       const data = await companiesService.create(formData);
 
-      // tu service devuelve { id, name, industry, message }
+      // your service returns { id, name, industry, message }
       router.push(`/companies/${data.id}`);
     } catch (err) {
       setSubmitError(err?.message || 'Error creating company');

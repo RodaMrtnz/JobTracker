@@ -158,7 +158,7 @@ export default function ApplicationForm({
         className="form-submit-button"
         disabled={loading}
       >
-        {loading ? 'Guardando...' : 'Guardar Aplicación'}
+        {loading ? 'Saving...' : 'Save Application'}
       </button>
     </form>
   );

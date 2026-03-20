@@ -9,7 +9,7 @@ class ApplicationController {
       const { companyId, position, technology, description, jobLink, statusName } = req.body;
 
       if (!companyId || !position || !technology || !description || !jobLink || !statusName) {
-        return res.status(400).json({ error: "Todos los campos son requeridos" });
+        return res.status(400).json({ error: "All fields are required" });
       }
 
       const result = await this.applicationService.create({
@@ -44,7 +44,7 @@ class ApplicationController {
       const { id } = req.params;
 
       if (!id) {
-        return res.status(400).json({ error: "ID de aplicación requerido" });
+        return res.status(400).json({ error: "Application ID is required" });
       }
 
       const application = await this.applicationService.getById(id, userId);
@@ -61,11 +61,11 @@ class ApplicationController {
       const updateData = req.body;
 
       if (!id) {
-        return res.status(400).json({ error: "ID de aplicación requerido" });
+        return res.status(400).json({ error: "Application ID is required" });
       }
 
       if (Object.keys(updateData).length === 0) {
-        return res.status(400).json({ error: "Proporciona al menos un campo para actualizar" });
+        return res.status(400).json({ error: "Provide at least one field to update" });
       }
 
       const result = await this.applicationService.updateById(id, userId, updateData);

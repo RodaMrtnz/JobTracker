@@ -11,7 +11,7 @@ export const authMiddleware = (req, res, next) => {
   : null;
 
     if (!token) {
-      return res.status(401).json({ error: "Token no provisto" });
+      return res.status(401).json({ error: "Token not provided" });
     }
 
     const decoded = authService.verifyToken(token);

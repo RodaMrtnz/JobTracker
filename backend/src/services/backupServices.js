@@ -4,7 +4,7 @@ import path from "path";
 
 class BackupService {
   static getDbFilePath() {
-    // Ajustá la ruta si tu db está en otro lado
+    // Adjust the path if your db is elsewhere
     const dbPath = path.resolve("src", "data", "jobtracker.db");
 
     if (!fs.existsSync(dbPath)) {

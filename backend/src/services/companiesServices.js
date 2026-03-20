@@ -7,10 +7,10 @@ class CompaniesService {
     try {
       const { name, industry } = companyData;
 
-      // Verificar que no exista una empresa con el mismo nombre
+      // Verify no company exists with the same name
       const existingCompany = await this.Company.findOne({ where: { name } });
       if (existingCompany) {
-        throw new Error("Una empresa con este nombre ya existe");
+        throw new Error("A company with this name already exists");
       }
 
       const newCompany = await this.Company.create({
@@ -22,10 +22,10 @@ class CompaniesService {
         id: newCompany.id,
         name: newCompany.name,
         industry: newCompany.industry,
-        message: "Empresa creada exitosamente",
+        message: "Company created successfully",
       };
     } catch (error) {
-      throw new Error(`Error al crear empresa: ${error.message}`);
+      throw new Error(`Error creating company: ${error.message}`);
     }
   }
 
@@ -34,12 +34,12 @@ class CompaniesService {
       const companies = await this.Company.findAll();
 
       if (companies.length === 0) {
-        return { message: "No hay empresas registradas", companies: [] };
+        return { message: "No companies registered", companies: [] };
       }
 
       return companies;
     } catch (error) {
-      throw new Error(`Error al obtener empresas: ${error.message}`);
+      throw new Error(`Error fetching companies: ${error.message}`);
     }
   }
 
@@ -48,12 +48,12 @@ class CompaniesService {
       const company = await this.Company.findByPk(companyId);
 
       if (!company) {
-        throw new Error("Empresa no encontrada");
+        throw new Error("Company not found");
       }
 
       return company;
     } catch (error) {
-      throw new Error(`Error al obtener empresa: ${error.message}`);
+      throw new Error(`Error fetching company: ${error.message}`);
     }
   }
 
@@ -62,17 +62,17 @@ class CompaniesService {
       const company = await this.Company.findByPk(companyId);
 
       if (!company) {
-        throw new Error("Empresa no encontrada");
+        throw new Error("Company not found");
       }
 
-      // No permitir cambiar id
+      // Do not allow changing id
       delete updateData.id;
 
-      // Si se actualiza el nombre, verificar que no exista otro con ese nombre
+      // If name is updated, verify no other company has that name
       if (updateData.name && updateData.name !== company.name) {
         const existingCompany = await this.Company.findOne({ where: { name: updateData.name } });
         if (existingCompany) {
-          throw new Error("Una empresa con este nombre ya existe");
+          throw new Error("A company with this name already exists");
         }
       }
 
@@ -82,10 +82,10 @@ class CompaniesService {
         id: company.id,
         name: company.name,
         industry: company.industry,
-        message: "Empresa actualizada exitosamente",
+        message: "Company updated successfully",
       };
     } catch (error) {
-      throw new Error(`Error al actualizar empresa: ${error.message}`);
+      throw new Error(`Error updating company: ${error.message}`);
     }
   }
 }
